@@ -1,0 +1,26 @@
+(* MAVEN_VERSION=3.9.6 *)
+cd /opt
+sudo curl -O https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
+
+(* Extract the tarball: *)
+sudo tar -xzvf apache-maven-${MAVEN_VERSION}-bin.tar.gz
+(* 
+Create a symbolic link for easy version management: *)
+sudo ln -s apache-maven-${MAVEN_VERSION} maven
+
+(* 🛠️ Step 3: Set Environment Variables
+Create a profile script to load Maven environment variables: *)
+sudo tee /etc/profile.d/maven.sh <<EOF
+export M2_HOME=/opt/maven
+export PATH=\$M2_HOME/bin:\$PATH
+EOF
+(* 
+Make it executable: *)
+sudo chmod +x /etc/profile.d/maven.sh
+(* 
+Load the environment variables into the current session: *)
+source /etc/profile.d/maven.sh
+(* 
+✅ Step 4: Verify Maven Installation
+Run this command to check if Maven is working: *)
+mvn -version
